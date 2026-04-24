@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Mascota — CEM | Municipalidad de Esquina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Barlow:wght@400;500;600&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --azul-cem: #0F2744;
+            --azul-cem-medio: #1A3D5C;
+            --azul-cem-palido: #E8EEF4;
+            --azul-esquina: #3AAEE0;
+            --verde: #6CBF6A;
+            --amarillo: #F5C842;
+            --rojo: #E05C4A;
+            --fondo: #F4F7FA;
+            --superficie: #FFFFFF;
+            --borde: #C8D6E2;
+            --texto: #1A2D3D;
+            --texto-sec: #5A7387;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            background: var(--fondo);
+            color: var(--texto);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* ===== HEADER MUNICIPAL ===== */
+        .top-bar {
+            background: var(--azul-cem);
+            padding: 8px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+        .top-bar span { font-family: 'DM Mono', monospace; }
+
+        .header-main {
+            background: var(--azul-cem-medio);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 4px solid var(--azul-esquina);
+        }
+
+        .logo-muni {
+            width: 56px; height: 56px;
+            background: var(--superficie);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 900; font-size: 22px;
+            color: var(--azul-cem);
+            flex-shrink: 0;
+        }
+
+        .header-text h1 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 900;
+            font-size: 26px;
+            color: var(--superficie);
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+        }
+        .header-text p {
+            color: var(--azul-esquina);
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        /* ===== CONTENIDO ===== */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+        }
+
+        .campaign-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--azul-cem-palido);
+            border: 1px solid var(--borde);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--azul-cem-medio);
+            margin-bottom: 24px;
+        }
+        .campaign-badge::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--verde);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        h2 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--azul-cem);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--azul-cem-palido);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2 .num {
+            background: var(--azul-cem);
+            color: var(--superficie);
+            width: 28px; height: 28px;
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'DM Mono', monospace;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .section {
+            background: var(--superficie);
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(15,39,68,0.04);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .form-row:last-child { margin-bottom: 0; }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .field.full { grid-column: 1 / -1; }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--texto);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        label .req { color: var(--rojo); font-size: 16px; line-height: 1; }
+        label .hint {
+            font-weight: 400;
+            color: var(--texto-sec);
+            font-size: 12px;
+        }
+
+        input, select, textarea {
+            font-family: 'Barlow', sans-serif;
+            font-size: 15px;
+            padding: 10px 14px;
+            border: 1.5px solid var(--borde);
+            border-radius: 8px;
+            background: var(--superficie);
+            color: var(--texto);
+            transition: all 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--azul-esquina);
+            box-shadow: 0 0 0 3px rgba(58,174,224,0.15);
+        }
+        input::placeholder, textarea::placeholder {
+            color: #A0B4C4;
+        }
+
+        textarea { resize: vertical; min-height: 80px; }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235A7387' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 36px;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .radio-item, .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border: 1.5px solid var(--borde);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        .radio-item:hover, .checkbox-item:hover {
+            border-color: var(--azul-esquina);
+            background: rgba(58,174,224,0.05);
+        }
+        .radio-item input, .checkbox-item input {
+            width: 18px; height: 18px;
+            accent-color: var(--azul-cem);
+        }
+        .radio-item.selected, .checkbox-item.selected {
+            border-color: var(--azul-cem);
+            background: var(--azul-cem-palido);
+        }
+
+        .conditional {
+            display: none;
+            margin-top: 12px;
+            padding: 16px;
+            background: var(--fondo);
+            border-radius: 8px;
+            border-left: 3px solid var(--amarillo);
+        }
+        .conditional.active { display: block; }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .tag-success { background: rgba(108,191,106,0.15); color: #3D8B3B; }
+        .tag-warning { background: rgba(245,200,66,0.15); color: #B8941A; }
+        .tag-danger { background: rgba(224,92,74,0.15); color: #C44A3A; }
+
+        /* ===== BOTONES ===== */
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px solid var(--azul-cem-palido);
+        }
+
+        .btn {
+            font-family: 'Barlow', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 14px 32px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: var(--azul-cem);
+            color: var(--superficie);
+        }
+        .btn-primary:hover {
+            background: var(--azul-cem-medio);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15,39,68,0.25);
+        }
+        .btn-secondary {
+            background: var(--superficie);
+            color: var(--azul-cem-medio);
+            border: 1.5px solid var(--borde);
+        }
+        .btn-secondary:hover {
+            border-color: var(--azul-cem-medio);
+            background: var(--azul-cem-palido);
+        }
+
+        /* ===== MENSAJES ===== */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            display: none; /* OCULTO POR DEFECTO */
+        }
+        .alert.visible {
+            display: flex; /* MOSTRAR CUANDO TIENE CLASE visible */
+        }
+        .alert.success {
+            background: rgba(108,191,106,0.12);
+            color: #2D7A2B;
+            border: 1px solid rgba(108,191,106,0.3);
+        }
+        .alert.error {
+            background: rgba(224,92,74,0.12);
+            color: #B03A2B;
+            border: 1px solid rgba(224,92,74,0.3);
+        }
+        .alert .icon {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .alert.success .icon { background: var(--verde); color: white; }
+        .alert.error .icon { background: var(--rojo); color: white; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--texto-sec);
+            font-size: 12px;
+            border-top: 1px solid var(--borde);
+        }
+        .footer strong { color: var(--azul-cem); }
+
+        /* ===== SPINNER ===== */
+        .spinner {
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .header-main { flex-direction: column; text-align: center; }
+            .header-text h1 { font-size: 22px; }
+            .form-row { grid-template-columns: 1fr; }
+            .actions { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <span>CEM · Centro Estadístico Municipal</span>
+        <span>Esquina, Corrientes · Argentina</span>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header-main">
+        <div class="logo-muni">E</div>
+        <div class="header-text">
+            <h1>Registro de Mascota</h1>
+            <p>Campaña de Vacunación Antirrábica · Dirección de Zoonosis</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="campaign-badge">
+            Campaña de Vacunación Masiva 2026
+        </div>
+
+        <!-- ALERTAS - OCULTAS POR DEFECTO -->
+        <div id="alertSuccess" class="alert success">
+            <div class="icon">✓</div>
+            <div>
+                <strong>¡Registro guardado correctamente!</strong><br>
+                Se generó la ficha digital de la mascota. <span id="codigoGenerado"></span>
+            </div>
+        </div>
+        <div id="alertError" class="alert error">
+            <div class="icon">✕</div>
+            <div id="errorMsg">Error al guardar. Intentá de nuevo.</div>
+        </div>
+
+        <form id="formMascota">
+
+            <!-- SECCIÓN 1: PROPIETARIO -->
+            <h2><span class="num">1</span> Datos del Propietario</h2>
+            <div class="section">
+                <div class="form-row">
+                    <div class="field">
+                        <label>Apellido y Nombre <span class="req">*</span></label>
+                        <input type="text" name="propietario_nombre" required placeholder="Ej: Pérez, Juan Carlos">
+                    </div>
+                    <div class="field">
+                        <label>DNI / CUIL <span class="req">*</span></label>
+                        <input type="text" name="propietario_dni" required placeholder="Ej: 12345678">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Teléfono <span class="req">*</span> <span class="hint">(preferentemente con WhatsApp)</span></label>
+                        <input type="tel" name="propietario_telefono" required placeholder="Ej: 3777-123456">
+                    </div>
+                    <div class="field">
+                        <label>Correo electrónico</label>
+                        <input type="email" name="propietario_email" placeholder="Ej: nombre@email.com">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field full">
+                        <label>Domicilio completo <span class="req">*</span></label>
+                        <input type="text" name="propietario_domicilio" required placeholder="Calle, número, barrio">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Localidad / Zona <span class="req">*</span></label>
+                        <select name="propietario_localidad" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Esquina Centro">Esquina Centro</option>
+                            <option value="Esquina Norte">Esquina Norte</option>
+                            <option value="Esquina Sur">Esquina Sur</option>
+                            <option value="Zona Rural">Zona Rural</option>
+                            <option value="Pueblo Libertador">Pueblo Libertador</option>
+                            <option value="Otra">Otra (especificar en obs.)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Condición <span class="req">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="propietario_condicion" value="Propietario" required checked>
+                                Propietario
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="propietario_condicion" value="Tenedor responsable" required>
+                                Tenedor responsable
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2: MASCOTA -->
+            <h2><span class="num">2</span> Datos de la Mascota</h2>
+            <div class="section">
+                <div class="form-row">
+                    <div class="field">
+                        <label>Nombre de la mascota <span class="req">*</span></label>
+                        <input type="text" name="mascota_nombre" required placeholder="Ej: Luna">
+                    </div>
+                    <div class="field">
+                        <label>Especie <span class="req">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="mascota_especie" value="Canino" required checked>
+                                🐕 Canino
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="mascota_especie" value="Felino" required>
+                                🐈 Felino
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="mascota_especie" value="Otro" required>
+                                Otro
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Raza</label>
+                        <input type="text" name="mascota_raza" placeholder="Ej: Ovejero Alemán / Mestizo">
+                    </div>
+                    <div class="field">
+                        <label>Sexo <span class="req">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="mascota_sexo" value="Macho" required checked>
+                                Macho
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="mascota_sexo" value="Hembra" required>
+                                Hembra
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>¿Está castrado/a? <span class="req">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="mascota_castrado" value="Sí" required>
+                                Sí
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="mascota_castrado" value="No" required checked>
+                                No
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="mascota_castrado" value="No sé" required>
+                                No sé
+                            </label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Fecha de nacimiento (aprox.)</label>
+                        <input type="date" name="mascota_fecha_nac">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Edad aproximada <span class="hint">(si no se conoce la fecha)</span></label>
+                        <input type="text" name="mascota_edad_aprox" placeholder="Ej: 2 años y 3 meses">
+                    </div>
+                    <div class="field">
+                        <label>Color / Pelaje <span class="req">*</span></label>
+                        <input type="text" name="mascota_color" required placeholder="Ej: Negro con manchas blancas">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Señas particulares</label>
+                        <input type="text" name="mascota_senas" placeholder="Cicatrices, manchas distintivas, etc.">
+                    </div>
+                    <div class="field">
+                        <label>Microchip / Identificación</label>
+                        <input type="text" name="mascota_microchip" placeholder="Número de chip, si tiene">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 3: ESTADO DE SALUD -->
+            <h2><span class="num">3</span> Estado de Salud Previo</h2>
+            <div class="section">
+                <div class="form-row">
+                    <div class="field full">
+                        <label>¿Tiene enfermedades conocidas?</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="salud_enfermedad" value="No" checked onchange="toggleConditional('enfermedad_detalle', false)">
+                                No
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="salud_enfermedad" value="Sí" onchange="toggleConditional('enfermedad_detalle', true)">
+                                Sí
+                            </label>
+                        </div>
+                        <div id="enfermedad_detalle" class="conditional">
+                            <label>Detallar enfermedades:</label>
+                            <textarea name="salud_enfermedad_detalle" placeholder="Especificar diagnósticos conocidos..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field full">
+                        <label>¿Está bajo tratamiento médico?</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="salud_tratamiento" value="No" checked onchange="toggleConditional('tratamiento_detalle', false)">
+                                No
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="salud_tratamiento" value="Sí" onchange="toggleConditional('tratamiento_detalle', true)">
+                                Sí
+                            </label>
+                        </div>
+                        <div id="tratamiento_detalle" class="conditional">
+                            <label>Detallar tratamiento:</label>
+                            <textarea name="salud_tratamiento_detalle" placeholder="Medicamentos, dosis, frecuencia..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field full">
+                        <label>¿Alergias conocidas?</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="salud_alergia" value="No" checked onchange="toggleConditional('alergia_detalle', false)">
+                                No
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="salud_alergia" value="Sí" onchange="toggleConditional('alergia_detalle', true)">
+                                Sí
+                            </label>
+                        </div>
+                        <div id="alergia_detalle" class="conditional">
+                            <label>Detallar alergias:</label>
+                            <textarea name="salud_alergia_detalle" placeholder="Especificar alergias conocidas..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field full">
+                        <label>¿Reacciones adversas a vacunas previas?</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="salud_reaccion" value="No" checked onchange="toggleConditional('reaccion_detalle', false)">
+                                No
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="salud_reaccion" value="Sí" onchange="toggleConditional('reaccion_detalle', true)">
+                                Sí
+                            </label>
+                        </div>
+                        <div id="reaccion_detalle" class="conditional">
+                            <label>Detallar reacción:</label>
+                            <textarea name="salud_reaccion_detalle" placeholder="Describir la reacción y vacuna que la causó..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Estado general observado <span class="req">*</span></label>
+                        <select name="salud_estado" required>
+                            <option value="Bueno">Bueno</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Malo">Malo</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>¿Embarazada o lactando? <span class="hint">(hembras)</span></label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="salud_embarazo" value="No" checked>
+                                No
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="salud_embarazo" value="Sí">
+                                Sí
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="salud_embarazo" value="No aplica">
+                                No aplica
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 4: VACUNACIÓN -->
+            <h2><span class="num">4</span> Vacunación — Esta Campaña</h2>
+            <div class="section">
+                <div class="form-row">
+                    <div class="field">
+                        <label>Fecha de vacunación <span class="req">*</span></label>
+                        <input type="date" name="vacuna_fecha" required id="fechaVacuna">
+                    </div>
+                    <div class="field">
+                        <label>Vacuna aplicada <span class="req">*</span></label>
+                        <select name="vacuna_tipo" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Antirrábica">Antirrábica</option>
+                            <option value="Múltiple (Quíntuple)">Múltiple (Quíntuple)</option>
+                            <option value="Leucemia felina">Leucemia felina</option>
+                            <option value="Triple felina">Triple felina</option>
+                            <option value="Otra">Otra (especificar)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Marca y lote <span class="req">*</span> <span class="hint">(para trazabilidad)</span></label>
+                        <input type="text" name="vacuna_lote" required placeholder="Ej: Nobivac · Lote: ABC123">
+                    </div>
+                    <div class="field">
+                        <label>Dosis <span class="req">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="vacuna_dosis" value="Primera" required>
+                                Primera
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="vacuna_dosis" value="Refuerzo" required checked>
+                                Refuerzo
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="vacuna_dosis" value="Anual" required>
+                                Anual
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Vía de administración <span class="req">*</span></label>
+                        <select name="vacuna_via" required>
+                            <option value="Subcutánea" selected>Subcutánea</option>
+                            <option value="Intramuscular">Intramuscular</option>
+                            <option value="Oral">Oral</option>
+                            <option value="Intranasal">Intranasal</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Próxima vacunación <span class="hint">(calculada automáticamente)</span></label>
+                        <input type="date" name="vacuna_proxima" id="proximaVacuna" readonly style="background: var(--azul-cem-palido);">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Profesional que aplicó <span class="req">*</span></label>
+                        <input type="text" name="vacuna_profesional" required placeholder="Nombre completo y matrícula">
+                    </div>
+                    <div class="field">
+                        <label>Lugar de vacunación <span class="req">*</span></label>
+                        <select name="vacuna_lugar" required>
+                            <option value="">Seleccionar punto...</option>
+                            <option value="Plaza San Martín">Plaza San Martín</option>
+                            <option value="Centro de Salud Norte">Centro de Salud Norte</option>
+                            <option value="Centro de Salud Sur">Centro de Salud Sur</option>
+                            <option value="Pueblo Libertador">Pueblo Libertador</option>
+                            <option value="Zona Rural (móvil)">Zona Rural (móvil)</option>
+                            <option value="Domicilio particular">Domicilio particular</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 5: DESPARASITACIÓN -->
+            <h2><span class="num">5</span> Desparasitación (Opcional)</h2>
+            <div class="section">
+                <div class="form-row">
+                    <div class="field full">
+                        <label>¿Se realizó desparasitación?</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="desparasito_realizo" value="No" checked onchange="toggleConditional('desparasito_detalle', false)">
+                                No
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="desparasito_realizo" value="Sí" onchange="toggleConditional('desparasito_detalle', true)">
+                                Sí
+                            </label>
+                        </div>
+                        <div id="desparasito_detalle" class="conditional">
+                            <div class="form-row">
+                                <div class="field">
+                                    <label>Producto utilizado</label>
+                                    <input type="text" name="desparasito_producto" placeholder="Ej: Drontal Plus">
+                                </div>
+                                <div class="field">
+                                    <label>Tipo</label>
+                                    <select name="desparasito_tipo">
+                                        <option value="Interna">Interna</option>
+                                        <option value="Externa">Externa</option>
+                                        <option value="Ambas">Ambas</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="field">
+                                    <label>Próxima desparasitación</label>
+                                    <input type="date" name="desparasito_proxima">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 6: OBSERVACIONES -->
+            <h2><span class="num">6</span> Observaciones y Recomendaciones</h2>
+            <div class="section">
+                <div class="form-row">
+                    <div class="field full">
+                        <label>Observaciones del profesional</label>
+                        <textarea name="observaciones" placeholder="Cualquier dato relevante sobre la mascota o la consulta..."></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field full">
+                        <label>Recomendaciones al dueño</label>
+                        <textarea name="recomendaciones" placeholder="Cuidados post-vacunación, próximos controles..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACCIONES -->
+            <div class="actions">
+                <button type="button" class="btn btn-secondary" onclick="limpiarFormulario()">
+                    Limpiar formulario
+                </button>
+                <button type="submit" class="btn btn-primary" id="btnSubmit">
+                    <span class="spinner" id="spinner"></span>
+                    <span id="btnText">Guardar registro y generar ficha</span>
+                </button>
+            </div>
+
+        </form>
+
+        <div class="footer">
+            <strong>Centro Estadístico Municipal (CEM)</strong> · Municipalidad de Esquina · Corrientes, Argentina<br>
+            Dirección de Zoonosis · Campaña de Vacunación Antirrábica 2026
+        </div>
+    </div>
+
+    <script>
+        // Set fecha actual por defecto
+        document.getElementById('fechaVacuna').valueAsDate = new Date();
+
+        // Calcular próxima vacunación (1 año por defecto)
+        document.getElementById('fechaVacuna').addEventListener('change', calcularProxima);
+        document.querySelector('select[name="vacuna_tipo"]').addEventListener('change', calcularProxima);
+
+        function calcularProxima() {
+            const fecha = document.getElementById('fechaVacuna').value;
+            const tipo = document.querySelector('select[name="vacuna_tipo"]').value;
+            if (!fecha) return;
+
+            const d = new Date(fecha);
+            // Antirrábica: anual, Múltiple: anual, Leucemia: anual
+            d.setFullYear(d.getFullYear() + 1);
+            document.getElementById('proximaVacuna').value = d.toISOString().split('T')[0];
+        }
+        calcularProxima();
+
+        // Toggle condicionales
+        function toggleConditional(id, show) {
+            document.getElementById(id).classList.toggle('active', show);
+        }
+
+        // Limpiar formulario
+        function limpiarFormulario() {
+            if (confirm('¿Estás seguro de que querés limpiar todo el formulario?')) {
+                document.getElementById('formMascota').reset();
+                document.querySelectorAll('.conditional').forEach(c => c.classList.remove('active'));
+                document.getElementById('fechaVacuna').valueAsDate = new Date();
+                calcularProxima();
+                
+                // Reset alerts
+                document.getElementById('alertSuccess').classList.remove('visible');
+                document.getElementById('alertError').classList.remove('visible');
+            }
+        }
+
+        // Radio item styling
+        document.querySelectorAll('.radio-item input').forEach(r => {
+            r.addEventListener('change', function() {
+                const name = this.name;
+                document.querySelectorAll(`input[name="${name}"]`).forEach(rb => {
+                    rb.closest('.radio-item').classList.toggle('selected', rb.checked);
+                });
+            });
+            // Init
+            if (r.checked) r.closest('.radio-item').classList.add('selected');
+        });
+
+        // SUBMIT
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUA4YQWwGpvlk-9CiWJ6HPJ2BkWmw25cDyYLSZrEdJpEIj9AInODI5BWkvbcC73z4icQ/exec'; // 
+
+        document.getElementById('formMascota').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('btnSubmit');
+            const spinner = document.getElementById('spinner');
+            const btnText = document.getElementById('btnText');
+            const alertSuccess = document.getElementById('alertSuccess');
+            const alertError = document.getElementById('alertError');
+
+            // Reset alerts - OCULTAR ANTES DE ENVIAR
+            alertSuccess.classList.remove('visible');
+            alertError.classList.remove('visible');
+
+            // Loading state
+            btn.disabled = true;
+            spinner.style.display = 'block';
+            btnText.textContent = 'Guardando...';
+
+            // Collect data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // Handle radio groups that might have multiple values
+            const radios = ['propietario_condicion', 'mascota_especie', 'mascota_sexo', 
+                          'mascota_castrado', 'salud_enfermedad', 'salud_tratamiento',
+                          'salud_alergia', 'salud_reaccion', 'salud_embarazo',
+                          'vacuna_dosis', 'desparasito_realizo'];
+            radios.forEach(name => {
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                if (checked) data[name] = checked.value;
+            });
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('codigoGenerado').innerHTML = 
+                        `<br><strong>Código: ${result.codigo}</strong> · 
+                         <a href="${result.fichaUrl}" target="_blank" style="color: var(--azul-cem-medio);">Ver ficha digital →</a>`;
+                    alertSuccess.classList.add('visible');
+                    this.reset();
+                    document.querySelectorAll('.conditional').forEach(c => c.classList.remove('active'));
+                    document.getElementById('fechaVacuna').valueAsDate = new Date();
+                    calcularProxima();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    throw new Error(result.message || 'Error desconocido');
+                }
+            } catch (err) {
+                document.getElementById('errorMsg').textContent = err.message;
+                alertError.classList.add('visible');
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.textContent = 'Guardar registro y generar ficha';
+            }
+        });
+    </script>
+
+</body>
+</html>
