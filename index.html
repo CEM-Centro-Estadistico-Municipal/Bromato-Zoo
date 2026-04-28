@@ -6,404 +6,548 @@
     <title>Registro de Mascota — CEM | Municipalidad de Esquina</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Barlow:wght@400;500;600&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:wght@600;700&display=swap" rel="stylesheet">
     <style>
+        /* ===== CEM DESIGN SYSTEM TOKENS ===== */
         :root {
-            --azul-cem: #0F2744;
-            --azul-cem-medio: #1A3D5C;
-            --azul-cem-palido: #E8EEF4;
-            --azul-esquina: #3AAEE0;
-            --verde: #6CBF6A;
-            --amarillo: #F5C842;
-            --rojo: #E05C4A;
-            --fondo: #F4F7FA;
-            --superficie: #FFFFFF;
-            --borde: #C8D6E2;
-            --texto: #1A2D3D;
-            --texto-sec: #5A7387;
+            /* Azul institucional */
+            --cem-azul-50:  #e8eef5;
+            --cem-azul-100: #c8d9ec;
+            --cem-azul-200: #9bbad8;
+            --cem-azul-300: #6d9bc4;
+            --cem-azul-400: #4a80b4;
+            --cem-azul-500: #2d6da0;
+            --cem-azul-600: #1a5b8e;
+            --cem-azul-700: #0e5a9e;
+            --cem-azul-800: #0a3a68;
+            --cem-azul-900: #061e38;
+
+            /* Ocre dorado Esquina */
+            --cem-ocre-100: #f4e4c6;
+            --cem-ocre-200: #e8c98d;
+            --cem-ocre-300: #d4a85a;
+            --cem-ocre-400: #c49040;
+            --cem-ocre-500: #b8863d;
+            --cem-ocre-600: #9e6e2a;
+            --cem-ocre-700: #7a5018;
+
+            /* Papel y tinta — nunca puro blanco/negro */
+            --cem-papel:    #f8f5ee;
+            --cem-papel-2:  #eee6d5;
+            --cem-papel-3:  #e4d8c0;
+            --cem-tinta:    #171614;
+            --cem-tinta-2:  #3a3630;
+            --cem-tinta-3:  #6b6358;
+
+            /* Semánticos */
+            --cem-verde:    #2f7d32;
+            --cem-verde-bg: rgba(47,125,50,0.08);
+            --cem-rojo:     #a8322c;
+            --cem-rojo-bg:  rgba(168,50,44,0.08);
+            --cem-amarillo: #c9971a;
+
+            /* Neutros de borde */
+            --borde:        #d6cfc4;
+            --borde-fuerte: #b8b0a4;
+
+            /* Radios conservadores */
+            --radius-sm:  4px;
+            --radius-md:  8px;
+            --radius-lg:  12px;
+
+            /* Sombras discretas */
+            --shadow-1: 0 1px 2px rgba(15,23,42,0.04), 0 1px 1px rgba(15,23,42,0.06);
+            --shadow-2: 0 4px 12px rgba(15,23,42,0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Barlow', sans-serif;
-            background: var(--fondo);
-            color: var(--texto);
-            line-height: 1.5;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            background: var(--cem-papel);
+            color: var(--cem-tinta);
             min-height: 100vh;
         }
 
-        /* ===== HEADER MUNICIPAL ===== */
+        /* ===== TIRA SUPERIOR ===== */
         .top-bar {
-            background: var(--azul-cem);
-            padding: 8px 24px;
+            background: var(--cem-azul-900);
+            padding: 6px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 12px;
-            color: rgba(255,255,255,0.7);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            color: var(--cem-azul-200);
+            font-family: 'IBM Plex Mono', monospace;
         }
-        .top-bar span { font-family: 'DM Mono', monospace; }
 
+        /* ===== HEADER INSTITUCIONAL ===== */
         .header-main {
-            background: var(--azul-cem-medio);
-            padding: 20px 24px;
+            background: var(--cem-azul-800);
+            /* Patrón geométrico sutil: líneas diagonales en ocre al 8% */
+            background-image:
+                repeating-linear-gradient(
+                    135deg,
+                    rgba(184,134,61,0.08) 0px,
+                    rgba(184,134,61,0.08) 1px,
+                    transparent 1px,
+                    transparent 24px
+                );
+            padding: 28px 32px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            border-bottom: 4px solid var(--azul-esquina);
+            gap: 20px;
+            border-bottom: 3px solid var(--cem-ocre-500);
         }
 
-        .logo-muni {
-            width: 56px; height: 56px;
-            background: var(--superficie);
-            border-radius: 12px;
+        .logo-cem {
+            width: 52px; height: 52px;
+            background: var(--cem-papel);
+            border-radius: var(--radius-md);
             display: flex; align-items: center; justify-content: center;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 900; font-size: 22px;
-            color: var(--azul-cem);
             flex-shrink: 0;
         }
+        .logo-cem svg { width: 32px; height: 32px; }
 
+        .header-text { flex: 1; }
+        .header-text .supertitulo {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--cem-ocre-300);
+            margin-bottom: 4px;
+        }
         .header-text h1 {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 900;
-            font-size: 26px;
-            color: var(--superficie);
-            line-height: 1.1;
-            letter-spacing: -0.5px;
+            font-family: 'IBM Plex Serif', serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--cem-papel);
+            line-height: 1.2;
         }
-        .header-text p {
-            color: var(--azul-esquina);
+        .header-text .subtitulo {
             font-size: 13px;
-            font-weight: 500;
-            margin-top: 2px;
+            color: var(--cem-azul-200);
+            margin-top: 3px;
         }
 
-        /* ===== CONTENIDO ===== */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 32px 20px 60px;
-        }
-
-        .campaign-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--azul-cem-palido);
-            border: 1px solid var(--borde);
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--azul-cem-medio);
-            margin-bottom: 24px;
-        }
-        .campaign-badge::before {
-            content: '';
-            width: 8px; height: 8px;
-            background: var(--verde);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        h2 {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-weight: 800;
-            font-size: 20px;
-            color: var(--azul-cem);
-            margin-bottom: 20px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--azul-cem-palido);
+        .header-badge {
+            background: rgba(184,134,61,0.18);
+            border: 1px solid rgba(184,134,61,0.35);
+            border-radius: var(--radius-sm);
+            padding: 6px 14px;
+            font-size: 11px;
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--cem-ocre-200);
+            letter-spacing: 0.06em;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            flex-shrink: 0;
         }
-        h2 .num {
-            background: var(--azul-cem);
-            color: var(--superficie);
-            width: 28px; height: 28px;
-            border-radius: 6px;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'DM Mono', monospace;
+        .header-badge::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--cem-ocre-400);
+            animation: pulso 2s infinite;
+        }
+        @keyframes pulso {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* ===== CONTENEDOR ===== */
+        .container {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* ===== ALERTAS ===== */
+        .alert {
+            display: none;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 28px;
+            border-width: 1px;
+            border-style: solid;
             font-size: 14px;
+            line-height: 1.5;
+        }
+        .alert.visible { display: flex; }
+        .alert.success {
+            background: var(--cem-verde-bg);
+            border-color: rgba(47,125,50,0.25);
+            color: var(--cem-verde);
+        }
+        .alert.error {
+            background: var(--cem-rojo-bg);
+            border-color: rgba(168,50,44,0.25);
+            color: var(--cem-rojo);
+        }
+        .alert-icon {
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .alert.success .alert-icon { background: var(--cem-verde); color: white; }
+        .alert.error   .alert-icon { background: var(--cem-rojo);  color: white; }
+        .alert strong { font-weight: 600; }
+
+        /* ===== SECCIONES ===== */
+        .seccion-titulo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 36px 0 14px;
+        }
+        .seccion-titulo:first-of-type { margin-top: 0; }
+
+        .num-seccion {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
             font-weight: 500;
+            color: var(--cem-papel);
+            background: var(--cem-azul-700);
+            width: 26px; height: 26px;
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            letter-spacing: -0.02em;
         }
 
-        .section {
-            background: var(--superficie);
+        .seccion-titulo h2 {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--cem-azul-800);
+            letter-spacing: 0.01em;
+        }
+
+        .seccion-titulo .linea {
+            flex: 1;
+            height: 1px;
+            background: var(--borde);
+        }
+
+        .seccion-card {
+            background: white;
             border: 1px solid var(--borde);
-            border-radius: 12px;
+            border-radius: var(--radius-md);
             padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 2px 8px rgba(15,39,68,0.04);
+            box-shadow: var(--shadow-1);
         }
 
+        /* ===== GRILLA DE CAMPOS ===== */
         .form-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 16px;
             margin-bottom: 16px;
         }
         .form-row:last-child { margin-bottom: 0; }
 
-        .field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
+        .field { display: flex; flex-direction: column; gap: 5px; }
         .field.full { grid-column: 1 / -1; }
 
         label {
             font-size: 13px;
-            font-weight: 600;
-            color: var(--texto);
+            font-weight: 500;
+            color: var(--cem-tinta-2);
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
         }
-        label .req { color: var(--rojo); font-size: 16px; line-height: 1; }
+        label .req { color: var(--cem-rojo); }
         label .hint {
             font-weight: 400;
-            color: var(--texto-sec);
+            color: var(--cem-tinta-3);
             font-size: 12px;
         }
 
-        input, select, textarea {
-            font-family: 'Barlow', sans-serif;
+        /* ===== INPUTS ===== */
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="date"],
+        select,
+        textarea {
+            font-family: 'IBM Plex Sans', sans-serif;
             font-size: 15px;
-            padding: 10px 14px;
-            border: 1.5px solid var(--borde);
-            border-radius: 8px;
-            background: var(--superficie);
-            color: var(--texto);
-            transition: all 0.2s;
+            padding: 9px 12px;
+            border: 1px solid var(--borde);
+            border-radius: var(--radius-sm);
+            background: var(--cem-papel);
+            color: var(--cem-tinta);
+            transition: border-color 0.15s, box-shadow 0.15s;
+            width: 100%;
         }
-        input:focus, select:focus, textarea:focus {
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
             outline: none;
-            border-color: var(--azul-esquina);
-            box-shadow: 0 0 0 3px rgba(58,174,224,0.15);
+            border-color: var(--cem-azul-600);
+            box-shadow: 0 0 0 2px rgba(14,90,158,0.14);
+            background: white;
         }
-        input::placeholder, textarea::placeholder {
-            color: #A0B4C4;
-        }
+        input::placeholder, textarea::placeholder { color: #a89e94; }
 
-        textarea { resize: vertical; min-height: 80px; }
+        input[readonly] {
+            background: var(--cem-papel-2);
+            color: var(--cem-tinta-3);
+            cursor: default;
+        }
 
         select {
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235A7387' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b6358' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 14px center;
-            padding-right: 36px;
+            background-position: right 12px center;
+            padding-right: 32px;
         }
 
+        textarea { resize: vertical; min-height: 80px; }
+
+        /* Números mono en inputs de fecha */
+        input[type="date"] {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 14px;
+        }
+
+        /* ===== RADIOS Y CHECKBOXES ESTILO CEM ===== */
         .radio-group, .checkbox-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 8px;
         }
+
         .radio-item, .checkbox-item {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 14px;
-            border: 1.5px solid var(--borde);
-            border-radius: 8px;
+            padding: 7px 14px;
+            border: 1px solid var(--borde);
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: all 0.2s;
             font-size: 14px;
+            color: var(--cem-tinta-2);
+            transition: border-color 0.15s, background 0.15s;
+            user-select: none;
         }
         .radio-item:hover, .checkbox-item:hover {
-            border-color: var(--azul-esquina);
-            background: rgba(58,174,224,0.05);
-        }
-        .radio-item input, .checkbox-item input {
-            width: 18px; height: 18px;
-            accent-color: var(--azul-cem);
+            border-color: var(--cem-azul-400);
+            background: var(--cem-azul-50);
         }
         .radio-item.selected, .checkbox-item.selected {
-            border-color: var(--azul-cem);
-            background: var(--azul-cem-palido);
+            border-color: var(--cem-azul-700);
+            background: var(--cem-azul-50);
+            color: var(--cem-azul-800);
+            font-weight: 500;
+        }
+        .radio-item input, .checkbox-item input {
+            width: 16px; height: 16px;
+            accent-color: var(--cem-azul-700);
+            flex-shrink: 0;
         }
 
+        /* ===== CONDICIONALES ===== */
         .conditional {
             display: none;
             margin-top: 12px;
             padding: 16px;
-            background: var(--fondo);
-            border-radius: 8px;
-            border-left: 3px solid var(--amarillo);
+            background: var(--cem-papel);
+            border-radius: var(--radius-sm);
+            border-left: 2px solid var(--cem-ocre-400);
         }
         .conditional.active { display: block; }
+        .conditional label { color: var(--cem-tinta-3); }
 
-        .tag {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
+        /* ===== SEPARADOR INTERNO EN CARDS ===== */
+        .sep {
+            height: 1px;
+            background: var(--cem-papel-2);
+            margin: 20px 0;
         }
-        .tag-success { background: rgba(108,191,106,0.15); color: #3D8B3B; }
-        .tag-warning { background: rgba(245,200,66,0.15); color: #B8941A; }
-        .tag-danger { background: rgba(224,92,74,0.15); color: #C44A3A; }
+
+        /* ===== BARRA DE PROGRESO (decorativa) ===== */
+        .progreso-bar {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 32px;
+        }
+        .progreso-seg {
+            flex: 1;
+            height: 3px;
+            background: var(--borde);
+            border-radius: 2px;
+            transition: background 0.3s;
+        }
+        .progreso-seg.activo { background: var(--cem-azul-600); }
+        .progreso-seg.completado { background: var(--cem-ocre-500); }
 
         /* ===== BOTONES ===== */
         .actions {
             display: flex;
             gap: 12px;
-            justify-content: center;
-            margin-top: 32px;
+            justify-content: flex-end;
+            margin-top: 36px;
             padding-top: 24px;
-            border-top: 2px solid var(--azul-cem-palido);
+            border-top: 1px solid var(--borde);
         }
 
         .btn {
-            font-family: 'Barlow', sans-serif;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 14px;
             font-weight: 600;
-            font-size: 15px;
-            padding: 14px 32px;
-            border-radius: 10px;
+            padding: 11px 24px;
+            border-radius: var(--radius-sm);
             border: none;
             cursor: pointer;
-            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            transition: background 0.15s, box-shadow 0.15s, transform 0.08s;
+            letter-spacing: 0.01em;
         }
-        .btn-primary {
-            background: var(--azul-cem);
-            color: var(--superficie);
+        .btn:active { transform: translateY(1px); }
+
+        .btn-primario {
+            background: var(--cem-azul-700);
+            color: var(--cem-papel);
         }
-        .btn-primary:hover {
-            background: var(--azul-cem-medio);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(15,39,68,0.25);
+        .btn-primario:hover:not(:disabled) {
+            background: var(--cem-azul-800);
+            box-shadow: var(--shadow-2);
         }
-        .btn-secondary {
-            background: var(--superficie);
-            color: var(--azul-cem-medio);
-            border: 1.5px solid var(--borde);
-        }
-        .btn-secondary:hover {
-            border-color: var(--azul-cem-medio);
-            background: var(--azul-cem-palido);
+        .btn-primario:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
         }
 
-        /* ===== MENSAJES ===== */
-        .alert {
-            padding: 16px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            align-items: center;
-            gap: 12px;
-            font-weight: 500;
-            display: none; /* OCULTO POR DEFECTO */
+        .btn-secundario {
+            background: white;
+            color: var(--cem-tinta-2);
+            border: 1px solid var(--borde);
         }
-        .alert.visible {
-            display: flex; /* MOSTRAR CUANDO TIENE CLASE visible */
+        .btn-secundario:hover {
+            border-color: var(--borde-fuerte);
+            background: var(--cem-papel);
         }
-        .alert.success {
-            background: rgba(108,191,106,0.12);
-            color: #2D7A2B;
-            border: 1px solid rgba(108,191,106,0.3);
-        }
-        .alert.error {
-            background: rgba(224,92,74,0.12);
-            color: #B03A2B;
-            border: 1px solid rgba(224,92,74,0.3);
-        }
-        .alert .icon {
-            width: 24px; height: 24px;
+
+        /* ===== SPINNER ===== */
+        .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700;
-            flex-shrink: 0;
+            animation: girar 0.7s linear infinite;
+            display: none;
         }
-        .alert.success .icon { background: var(--verde); color: white; }
-        .alert.error .icon { background: var(--rojo); color: white; }
+        @keyframes girar { to { transform: rotate(360deg); } }
 
         /* ===== FOOTER ===== */
         .footer {
             text-align: center;
-            padding: 24px;
-            color: var(--texto-sec);
+            padding: 28px 24px;
             font-size: 12px;
+            color: var(--cem-tinta-3);
             border-top: 1px solid var(--borde);
+            margin-top: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 0.03em;
         }
-        .footer strong { color: var(--azul-cem); }
-
-        /* ===== SPINNER ===== */
-        .spinner {
-            width: 18px; height: 18px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: none;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 600px) {
-            .header-main { flex-direction: column; text-align: center; }
-            .header-text h1 { font-size: 22px; }
+        @media (max-width: 620px) {
+            .top-bar { padding: 6px 16px; font-size: 10px; }
+            .header-main { padding: 20px 16px; gap: 14px; flex-wrap: wrap; }
+            .header-badge { display: none; }
+            .container { padding: 28px 16px 60px; }
             .form-row { grid-template-columns: 1fr; }
-            .actions { flex-direction: column; }
+            .actions { flex-direction: column-reverse; }
             .btn { width: 100%; justify-content: center; }
+            .header-text h1 { font-size: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- TOP BAR -->
+    <!-- TIRA SUPERIOR -->
     <div class="top-bar">
-        <span>CEM · Centro Estadístico Municipal</span>
-        <span>Esquina, Corrientes · Argentina</span>
+        <span>CEM · Centro Estadístico Municipal · Municipalidad de Esquina</span>
+        <span>Corrientes, Argentina</span>
     </div>
 
     <!-- HEADER -->
     <header class="header-main">
-        <div class="logo-muni">E</div>
+        <!-- Ícono tipo torre del reloj / marca CEM en SVG -->
+        <div class="logo-cem">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Torre del reloj esquematizada -->
+                <rect x="12" y="2" width="8" height="6" rx="1" fill="#0e5a9e"/>
+                <rect x="14" y="1" width="4" height="3" rx="0.5" fill="#b8863d"/>
+                <rect x="10" y="8" width="12" height="18" rx="1" fill="#0e5a9e"/>
+                <rect x="4" y="24" width="24" height="4" rx="1" fill="#0a3a68"/>
+                <!-- ventanas -->
+                <rect x="14" y="11" width="4" height="4" rx="0.5" fill="#e8eef5"/>
+                <rect x="13" y="18" width="2.5" height="5" rx="0.5" fill="#b8863d"/>
+                <rect x="16.5" y="18" width="2.5" height="5" rx="0.5" fill="#b8863d"/>
+                <!-- chip CEM -->
+                <rect x="22" y="10" width="8" height="8" rx="1.5" fill="#b8863d"/>
+                <text x="23.5" y="17" font-size="5" fill="white" font-family="monospace" font-weight="700">C</text>
+            </svg>
+        </div>
         <div class="header-text">
-            <h1>Registro de Mascota</h1>
-            <p>Campaña de Vacunación Antirrábica · Dirección de Zoonosis</p>
+            <div class="supertitulo">Dirección de Zoonosis · Campaña Antirrábica 2026</div>
+            <h1>Registro de mascota</h1>
+            <div class="subtitulo">Completá todos los campos obligatorios para generar la ficha digital.</div>
+        </div>
+        <div class="header-badge">
+            Campaña activa 2026
         </div>
     </header>
 
     <div class="container">
 
-        <div class="campaign-badge">
-            Campaña de Vacunación Masiva 2026
-        </div>
-
-        <!-- ALERTAS - OCULTAS POR DEFECTO -->
+        <!-- Alertas -->
         <div id="alertSuccess" class="alert success">
-            <div class="icon">✓</div>
+            <div class="alert-icon">✓</div>
             <div>
-                <strong>¡Registro guardado correctamente!</strong><br>
-                Se generó la ficha digital de la mascota. <span id="codigoGenerado"></span>
+                <strong>¡Registro guardado!</strong> Se generó la ficha digital de la mascota.
+                <span id="codigoGenerado"></span>
             </div>
         </div>
         <div id="alertError" class="alert error">
-            <div class="icon">✕</div>
+            <div class="alert-icon">✕</div>
             <div id="errorMsg">Error al guardar. Intentá de nuevo.</div>
         </div>
 
         <form id="formMascota">
 
-            <!-- SECCIÓN 1: PROPIETARIO -->
-            <h2><span class="num">1</span> Datos del Propietario</h2>
-            <div class="section">
+            <!-- ═══════════ 1. PROPIETARIO ═══════════ -->
+            <div class="seccion-titulo">
+                <div class="num-seccion">1</div>
+                <h2>Datos del propietario</h2>
+                <div class="linea"></div>
+            </div>
+            <div class="seccion-card">
                 <div class="form-row">
                     <div class="field">
-                        <label>Apellido y Nombre <span class="req">*</span></label>
+                        <label>Apellido y nombre <span class="req">*</span></label>
                         <input type="text" name="propietario_nombre" required placeholder="Ej: Pérez, Juan Carlos">
                     </div>
                     <div class="field">
@@ -413,7 +557,7 @@
                 </div>
                 <div class="form-row">
                     <div class="field">
-                        <label>Teléfono <span class="req">*</span> <span class="hint">(preferentemente con WhatsApp)</span></label>
+                        <label>Teléfono <span class="req">*</span> <span class="hint">· preferentemente con WhatsApp</span></label>
                         <input type="tel" name="propietario_telefono" required placeholder="Ej: 3777-123456">
                     </div>
                     <div class="field">
@@ -456,9 +600,13 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 2: MASCOTA -->
-            <h2><span class="num">2</span> Datos de la Mascota</h2>
-            <div class="section">
+            <!-- ═══════════ 2. MASCOTA ═══════════ -->
+            <div class="seccion-titulo">
+                <div class="num-seccion">2</div>
+                <h2>Datos de la mascota</h2>
+                <div class="linea"></div>
+            </div>
+            <div class="seccion-card">
                 <div class="form-row">
                     <div class="field">
                         <label>Nombre de la mascota <span class="req">*</span></label>
@@ -469,11 +617,11 @@
                         <div class="radio-group">
                             <label class="radio-item">
                                 <input type="radio" name="mascota_especie" value="Canino" required checked>
-                                🐕 Canino
+                                Canino
                             </label>
                             <label class="radio-item">
                                 <input type="radio" name="mascota_especie" value="Felino" required>
-                                🐈 Felino
+                                Felino
                             </label>
                             <label class="radio-item">
                                 <input type="radio" name="mascota_especie" value="Otro" required>
@@ -485,7 +633,7 @@
                 <div class="form-row">
                     <div class="field">
                         <label>Raza</label>
-                        <input type="text" name="mascota_raza" placeholder="Ej: Ovejero Alemán / Mestizo">
+                        <input type="text" name="mascota_raza" placeholder="Ej: Ovejero alemán / Mestizo">
                     </div>
                     <div class="field">
                         <label>Sexo <span class="req">*</span></label>
@@ -520,13 +668,13 @@
                         </div>
                     </div>
                     <div class="field">
-                        <label>Fecha de nacimiento (aprox.)</label>
+                        <label>Fecha de nacimiento <span class="hint">· aprox.</span></label>
                         <input type="date" name="mascota_fecha_nac">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="field">
-                        <label>Edad aproximada <span class="hint">(si no se conoce la fecha)</span></label>
+                        <label>Edad aproximada <span class="hint">· si no se conoce la fecha</span></label>
                         <input type="text" name="mascota_edad_aprox" placeholder="Ej: 2 años y 3 meses">
                     </div>
                     <div class="field">
@@ -546,9 +694,13 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 3: ESTADO DE SALUD -->
-            <h2><span class="num">3</span> Estado de Salud Previo</h2>
-            <div class="section">
+            <!-- ═══════════ 3. ESTADO DE SALUD ═══════════ -->
+            <div class="seccion-titulo">
+                <div class="num-seccion">3</div>
+                <h2>Estado de salud previo</h2>
+                <div class="linea"></div>
+            </div>
+            <div class="seccion-card">
                 <div class="form-row">
                     <div class="field full">
                         <label>¿Tiene enfermedades conocidas?</label>
@@ -563,11 +715,12 @@
                             </label>
                         </div>
                         <div id="enfermedad_detalle" class="conditional">
-                            <label>Detallar enfermedades:</label>
+                            <label>Detallar enfermedades</label>
                             <textarea name="salud_enfermedad_detalle" placeholder="Especificar diagnósticos conocidos..."></textarea>
                         </div>
                     </div>
                 </div>
+                <div class="sep"></div>
                 <div class="form-row">
                     <div class="field full">
                         <label>¿Está bajo tratamiento médico?</label>
@@ -582,11 +735,12 @@
                             </label>
                         </div>
                         <div id="tratamiento_detalle" class="conditional">
-                            <label>Detallar tratamiento:</label>
+                            <label>Detallar tratamiento</label>
                             <textarea name="salud_tratamiento_detalle" placeholder="Medicamentos, dosis, frecuencia..."></textarea>
                         </div>
                     </div>
                 </div>
+                <div class="sep"></div>
                 <div class="form-row">
                     <div class="field full">
                         <label>¿Alergias conocidas?</label>
@@ -601,11 +755,12 @@
                             </label>
                         </div>
                         <div id="alergia_detalle" class="conditional">
-                            <label>Detallar alergias:</label>
+                            <label>Detallar alergias</label>
                             <textarea name="salud_alergia_detalle" placeholder="Especificar alergias conocidas..."></textarea>
                         </div>
                     </div>
                 </div>
+                <div class="sep"></div>
                 <div class="form-row">
                     <div class="field full">
                         <label>¿Reacciones adversas a vacunas previas?</label>
@@ -620,11 +775,12 @@
                             </label>
                         </div>
                         <div id="reaccion_detalle" class="conditional">
-                            <label>Detallar reacción:</label>
+                            <label>Detallar reacción</label>
                             <textarea name="salud_reaccion_detalle" placeholder="Describir la reacción y vacuna que la causó..."></textarea>
                         </div>
                     </div>
                 </div>
+                <div class="sep"></div>
                 <div class="form-row">
                     <div class="field">
                         <label>Estado general observado <span class="req">*</span></label>
@@ -635,7 +791,7 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label>¿Embarazada o lactando? <span class="hint">(hembras)</span></label>
+                        <label>¿Embarazada o lactando? <span class="hint">· hembras</span></label>
                         <div class="radio-group">
                             <label class="radio-item">
                                 <input type="radio" name="salud_embarazo" value="No" checked>
@@ -654,9 +810,13 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 4: VACUNACIÓN -->
-            <h2><span class="num">4</span> Vacunación — Esta Campaña</h2>
-            <div class="section">
+            <!-- ═══════════ 4. VACUNACIÓN ═══════════ -->
+            <div class="seccion-titulo">
+                <div class="num-seccion">4</div>
+                <h2>Vacunación — esta campaña</h2>
+                <div class="linea"></div>
+            </div>
+            <div class="seccion-card">
                 <div class="form-row">
                     <div class="field">
                         <label>Fecha de vacunación <span class="req">*</span></label>
@@ -676,7 +836,7 @@
                 </div>
                 <div class="form-row">
                     <div class="field">
-                        <label>Marca y lote <span class="req">*</span> <span class="hint">(para trazabilidad)</span></label>
+                        <label>Marca y lote <span class="req">*</span> <span class="hint">· para trazabilidad</span></label>
                         <input type="text" name="vacuna_lote" required placeholder="Ej: Nobivac · Lote: ABC123">
                     </div>
                     <div class="field">
@@ -708,8 +868,8 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label>Próxima vacunación <span class="hint">(calculada automáticamente)</span></label>
-                        <input type="date" name="vacuna_proxima" id="proximaVacuna" readonly style="background: var(--azul-cem-palido);">
+                        <label>Próxima vacunación <span class="hint">· calculada automáticamente</span></label>
+                        <input type="date" name="vacuna_proxima" id="proximaVacuna" readonly>
                     </div>
                 </div>
                 <div class="form-row">
@@ -732,9 +892,13 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 5: DESPARASITACIÓN -->
-            <h2><span class="num">5</span> Desparasitación (Opcional)</h2>
-            <div class="section">
+            <!-- ═══════════ 5. DESPARASITACIÓN ═══════════ -->
+            <div class="seccion-titulo">
+                <div class="num-seccion">5</div>
+                <h2>Desparasitación <span style="font-weight:400;color:var(--cem-tinta-3);font-size:13px;">· opcional</span></h2>
+                <div class="linea"></div>
+            </div>
+            <div class="seccion-card">
                 <div class="form-row">
                     <div class="field full">
                         <label>¿Se realizó desparasitación?</label>
@@ -763,7 +927,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            <div class="form-row" style="margin-top:12px;">
                                 <div class="field">
                                     <label>Próxima desparasitación</label>
                                     <input type="date" name="desparasito_proxima">
@@ -774,9 +938,13 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN 6: OBSERVACIONES -->
-            <h2><span class="num">6</span> Observaciones y Recomendaciones</h2>
-            <div class="section">
+            <!-- ═══════════ 6. OBSERVACIONES ═══════════ -->
+            <div class="seccion-titulo">
+                <div class="num-seccion">6</div>
+                <h2>Observaciones y recomendaciones</h2>
+                <div class="linea"></div>
+            </div>
+            <div class="seccion-card">
                 <div class="form-row">
                     <div class="field full">
                         <label>Observaciones del profesional</label>
@@ -793,10 +961,10 @@
 
             <!-- ACCIONES -->
             <div class="actions">
-                <button type="button" class="btn btn-secondary" onclick="limpiarFormulario()">
+                <button type="button" class="btn btn-secundario" onclick="limpiarFormulario()">
                     Limpiar formulario
                 </button>
-                <button type="submit" class="btn btn-primary" id="btnSubmit">
+                <button type="submit" class="btn btn-primario" id="btnSubmit">
                     <span class="spinner" id="spinner"></span>
                     <span id="btnText">Guardar registro y generar ficha</span>
                 </button>
@@ -805,64 +973,59 @@
         </form>
 
         <div class="footer">
-            <strong>Centro Estadístico Municipal (CEM)</strong> · Municipalidad de Esquina · Corrientes, Argentina<br>
+            Centro Estadístico Municipal (CEM) · Municipalidad de Esquina · Corrientes, Argentina<br>
             Dirección de Zoonosis · Campaña de Vacunación Antirrábica 2026
         </div>
     </div>
 
     <script>
-        // Set fecha actual por defecto
+        // Fecha actual por defecto
         document.getElementById('fechaVacuna').valueAsDate = new Date();
-
-        // Calcular próxima vacunación (1 año por defecto)
         document.getElementById('fechaVacuna').addEventListener('change', calcularProxima);
         document.querySelector('select[name="vacuna_tipo"]').addEventListener('change', calcularProxima);
 
         function calcularProxima() {
             const fecha = document.getElementById('fechaVacuna').value;
-            const tipo = document.querySelector('select[name="vacuna_tipo"]').value;
             if (!fecha) return;
-
             const d = new Date(fecha);
-            // Antirrábica: anual, Múltiple: anual, Leucemia: anual
             d.setFullYear(d.getFullYear() + 1);
             document.getElementById('proximaVacuna').value = d.toISOString().split('T')[0];
         }
         calcularProxima();
 
-        // Toggle condicionales
         function toggleConditional(id, show) {
             document.getElementById(id).classList.toggle('active', show);
         }
 
-        // Limpiar formulario
         function limpiarFormulario() {
             if (confirm('¿Estás seguro de que querés limpiar todo el formulario?')) {
                 document.getElementById('formMascota').reset();
                 document.querySelectorAll('.conditional').forEach(c => c.classList.remove('active'));
+                document.querySelectorAll('.radio-item, .checkbox-item').forEach(el => el.classList.remove('selected'));
+                // Re-marcar los checked por defecto
+                document.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(r => {
+                    r.closest('.radio-item, .checkbox-item')?.classList.add('selected');
+                });
                 document.getElementById('fechaVacuna').valueAsDate = new Date();
                 calcularProxima();
-                
-                // Reset alerts
                 document.getElementById('alertSuccess').classList.remove('visible');
                 document.getElementById('alertError').classList.remove('visible');
             }
         }
 
-        // Radio item styling
-        document.querySelectorAll('.radio-item input').forEach(r => {
+        // Estilo seleccionado en radio items
+        document.querySelectorAll('.radio-item input, .checkbox-item input').forEach(r => {
             r.addEventListener('change', function() {
                 const name = this.name;
                 document.querySelectorAll(`input[name="${name}"]`).forEach(rb => {
-                    rb.closest('.radio-item').classList.toggle('selected', rb.checked);
+                    rb.closest('.radio-item, .checkbox-item')?.classList.toggle('selected', rb.checked);
                 });
             });
-            // Init
-            if (r.checked) r.closest('.radio-item').classList.add('selected');
+            if (r.checked) r.closest('.radio-item, .checkbox-item')?.classList.add('selected');
         });
 
         // SUBMIT
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUA4YQWwGpvlk-9CiWJ6HPJ2BkWmw25cDyYLSZrEdJpEIj9AInODI5BWkvbcC73z4icQ/exec'; // 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyju1SiLbjpk4bOT4rO79F0YR6oFpC7VyQd17Nzn3lb8TgQef96OZdFSo9Hw1jrAJTrtg/exec';
 
         document.getElementById('formMascota').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -873,21 +1036,17 @@
             const alertSuccess = document.getElementById('alertSuccess');
             const alertError = document.getElementById('alertError');
 
-            // Reset alerts - OCULTAR ANTES DE ENVIAR
             alertSuccess.classList.remove('visible');
             alertError.classList.remove('visible');
 
-            // Loading state
             btn.disabled = true;
             spinner.style.display = 'block';
             btnText.textContent = 'Guardando...';
 
-            // Collect data
             const formData = new FormData(this);
             const data = Object.fromEntries(formData.entries());
 
-            // Handle radio groups that might have multiple values
-            const radios = ['propietario_condicion', 'mascota_especie', 'mascota_sexo', 
+            const radios = ['propietario_condicion', 'mascota_especie', 'mascota_sexo',
                           'mascota_castrado', 'salud_enfermedad', 'salud_tratamiento',
                           'salud_alergia', 'salud_reaccion', 'salud_embarazo',
                           'vacuna_dosis', 'desparasito_realizo'];
@@ -905,12 +1064,16 @@
                 const result = await response.json();
 
                 if (result.success) {
-                    document.getElementById('codigoGenerado').innerHTML = 
-                        `<br><strong>Código: ${result.codigo}</strong> · 
-                         <a href="${result.fichaUrl}" target="_blank" style="color: var(--azul-cem-medio);">Ver ficha digital →</a>`;
+                    document.getElementById('codigoGenerado').innerHTML =
+                        `&nbsp;· <strong>Código: ${result.codigo}</strong>&nbsp;
+                         <a href="${result.fichaUrl}" target="_blank" style="color:var(--cem-azul-700);">Ver ficha →</a>`;
                     alertSuccess.classList.add('visible');
                     this.reset();
                     document.querySelectorAll('.conditional').forEach(c => c.classList.remove('active'));
+                    document.querySelectorAll('.radio-item, .checkbox-item').forEach(el => el.classList.remove('selected'));
+                    document.querySelectorAll('input[type="radio"]:checked').forEach(r => {
+                        r.closest('.radio-item')?.classList.add('selected');
+                    });
                     document.getElementById('fechaVacuna').valueAsDate = new Date();
                     calcularProxima();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
