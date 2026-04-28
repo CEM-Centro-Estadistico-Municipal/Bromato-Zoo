@@ -1024,12 +1024,19 @@
             if (r.checked) r.closest('.radio-item, .checkbox-item')?.classList.add('selected');
         });
 
-        // SUBMIT
+        // SUBMIT — técnica iframe oculto para evitar CORS con Google Apps Script
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyju1SiLbjpk4bOT4rO79F0YR6oFpC7VyQd17Nzn3lb8TgQef96OZdFSo9Hw1jrAJTrtg/exec';
 
-        document.getElementById('formMascota').addEventListener('submit', async function(e) {
+        // Iframe oculto que absorbe la respuesta del POST (evita redirección y CORS)
+        const iframeEnvio = document.createElement('iframe');
+        iframeEnvio.name = 'iframe-envio';
+        iframeEnvio.style.display = 'none';
+        document.body.appendChild(iframeEnvio);
+
+        document.getElementById('formMascota').addEventListener('submit', function(e) {
             e.preventDefault();
 
+            const form = this;
             const btn = document.getElementById('btnSubmit');
             const spinner = document.getElementById('spinner');
             const btnText = document.getElementById('btnText');
@@ -1038,34 +1045,43 @@
 
             alertSuccess.classList.remove('visible');
             alertError.classList.remove('visible');
-
             btn.disabled = true;
             spinner.style.display = 'block';
             btnText.textContent = 'Guardando...';
 
-            // FormData evita el preflight CORS con Google Apps Script
-            const formData = new FormData(this);
-
-            const radios = ['propietario_condicion', 'mascota_especie', 'mascota_sexo',
+            // Agregar inputs hidden para radios
+            const nombresRadio = ['propietario_condicion', 'mascota_especie', 'mascota_sexo',
                           'mascota_castrado', 'salud_enfermedad', 'salud_tratamiento',
                           'salud_alergia', 'salud_reaccion', 'salud_embarazo',
                           'vacuna_dosis', 'desparasito_realizo'];
-            radios.forEach(name => {
+            const tempInputs = [];
+            nombresRadio.forEach(name => {
                 const checked = document.querySelector(`input[name="${name}"]:checked`);
-                if (checked) formData.set(name, checked.value);
+                if (checked) {
+                    const h = document.createElement('input');
+                    h.type = 'hidden';
+                    h.name = name;
+                    h.value = checked.value;
+                    form.appendChild(h);
+                    tempInputs.push(h);
+                }
             });
 
-            try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData
-                });
+            // Enviar al iframe — sin fetch, sin CORS
+            form.action = SCRIPT_URL;
+            form.method = 'POST';
+            form.target = 'iframe-envio';
+            form.submit();
 
-                // fetch con FormData a Apps Script no devuelve respuesta legible (CORS),
-                // pero el dato SÍ llega al sheet — mostramos éxito directamente.
-                document.getElementById('codigoGenerado').innerHTML = '';
+            // Limpiar inputs temporales
+            tempInputs.forEach(el => el.remove());
+            form.removeAttribute('action');
+            form.removeAttribute('target');
+
+            // Esperar 2s y mostrar éxito
+            setTimeout(() => {
                 alertSuccess.classList.add('visible');
-                this.reset();
+                form.reset();
                 document.querySelectorAll('.conditional').forEach(c => c.classList.remove('active'));
                 document.querySelectorAll('.radio-item, .checkbox-item').forEach(el => el.classList.remove('selected'));
                 document.querySelectorAll('input[type="radio"]:checked').forEach(r => {
@@ -1074,16 +1090,12 @@
                 document.getElementById('fechaVacuna').valueAsDate = new Date();
                 calcularProxima();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            } catch (err) {
-                document.getElementById('errorMsg').textContent = 'Error al enviar. Revisá tu conexión e intentá de nuevo.';
-                alertError.classList.add('visible');
-            } finally {
                 btn.disabled = false;
                 spinner.style.display = 'none';
                 btnText.textContent = 'Guardar registro y generar ficha';
-            }
+            }, 2000);
         });
+
     </script>
 
 </body>
